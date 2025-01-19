@@ -3,7 +3,7 @@ const multer = require('multer');
 const xlsx = require('xlsx');
 const fs = require('fs');
 const path = require('path');
-const { normalizePhoneNumber, extractPhoneNumbers } = require('./utils');
+const { normalizePhoneNumber, extractPhoneNumbers } = require('./utils'); // Verifique este caminho
 
 const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
