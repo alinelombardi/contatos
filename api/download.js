@@ -4,18 +4,14 @@ const router = express.Router();
 const path = require('path');
 require('dotenv').config();
 
+const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+
 const auth = new google.auth.GoogleAuth({
-    credentials: {
-        type: 'service_account',
-        project_id: process.env.GOOGLE_PROJECT_ID,
-        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-        client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        client_id: process.env.GOOGLE_CLIENT_ID,
-        auth_uri: process.env.GOOGLE_AUTH_URI,
-        token_uri: process.env.GOOGLE_TOKEN_URI,
-        client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
-    },
-    scopes: ['https://www.googleapis.com/auth/drive.file'],
+  credentials: {
+    client_email: credentials.client_email,
+    private_key: credentials.private_key
+  },
+  scopes: ['https://www.googleapis.com/auth/drive']
 });
 
 const drive = google.drive({ version: 'v3', auth });

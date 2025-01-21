@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 // Configuração das rotas
 app.use('/api/upload', require('./api/upload'));
