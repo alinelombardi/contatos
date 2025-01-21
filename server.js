@@ -1,8 +1,7 @@
 const express = require('express');
-const path = require('path');
-
 const app = express();
 
+// Configuração das rotas
 app.use('/api/upload', require('./api/upload'));
 app.use('/api/download', require('./api/download'));
 
@@ -12,3 +11,4 @@ app.listen(port, () => {
 });
 
 module.exports = app;
+
