@@ -11,12 +11,12 @@ require('dotenv').config();
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
 
 const auth = new google.auth.GoogleAuth({
   credentials: {
-    client_email: credentials.client_email,
-    private_key: credentials.private_key
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    private_key: privateKey
   },
   scopes: ['https://www.googleapis.com/auth/drive']
 });

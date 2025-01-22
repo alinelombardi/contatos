@@ -13,6 +13,8 @@
     }
   ],
   "env": {
-    "GOOGLE_APPLICATION_CREDENTIALS": "@google_application_credentials"
+    "GOOGLE_DRIVE_FOLDER_ID": "@google_drive_folder_id",
+    "GOOGLE_CLIENT_EMAIL": "@google_client_email",
+    "GOOGLE_PRIVATE_KEY": "@google_private_key"
   }
 }
