@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'URL do arquivo não fornecida.' });
     }
 
-    const fileUrl = file;
+    const fileUrl = file.uri;
 
     // Baixar o arquivo usando Axios
     const response = await axios.get(fileUrl, { responseType: 'arraybuffer' });
