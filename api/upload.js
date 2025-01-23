@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const xlsx = require('xlsx');
-const fs = require('fs');
+// const fs = require('fs');
 const streamifier = require('streamifier');
 const { normalizePhoneNumber, extractPhoneNumbers } = require('./utils'); // Verifique este caminho
 const { google } = require('googleapis');
