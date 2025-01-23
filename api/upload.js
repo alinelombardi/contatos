@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const router = express.Router();
 
-const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\n/g, '\n');
+const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
 
 const auth = new google.auth.GoogleAuth({
   credentials: {
