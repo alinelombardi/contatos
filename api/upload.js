@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const router = express.Router();
 
-const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
+const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\n/g, '\n');
 
 const auth = new google.auth.GoogleAuth({
   credentials: {
@@ -26,14 +26,22 @@ router.post('/', async (req, res) => {
     const { defaultDDD, nomePlanilha, file } = req.body;
 
     if (!defaultDDD || !nomePlanilha || !file) {
-        return res.status(400).json({ error: 'Parâmetros inválidos ou ausentes.' });
-    }
-
-    if (!file) {
-      return res.status(400).json({ error: 'URL do arquivo não fornecida.' });
+      return res.status(400).json({ error: 'Parâmetros inválidos ou ausentes.' });
     }
 
     const fileUrl = file.uri;
+
+    // Validação do link do Blip Media Store
+    if (!fileUrl.includes('blipmediastore.blip.ai') || !fileUrl.includes('secure=true')) {
+      return res.status(400).json({ error: 'Link inválido ou ausente de parâmetros necessários.' });
+    }
+
+    // Verificação da validade do link
+    const urlParams = new URLSearchParams(fileUrl.split('?')[1]);
+    const expiration = new Date(urlParams.get('se'));
+    if (new Date() > expiration) {
+      return res.status(400).json({ error: 'O link fornecido expirou.' });
+    }
 
     // Baixar o arquivo usando Axios
     const response = await axios.get(fileUrl, { responseType: 'arraybuffer' });
