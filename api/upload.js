@@ -32,15 +32,19 @@ router.post('/', async (req, res) => {
     const fileUrl = file.uri;
 
     // Validação do link do Blip Media Store
-    if (!fileUrl.includes('blipmediastore.blip.ai') || !fileUrl.includes('secure=true')) {
-      return res.status(400).json({ error: 'Link inválido ou ausente de parâmetros necessários.' });
-    }
+    // if (!fileUrl.includes('prime.altubots') || !fileUrl.includes('blipmediastore.blip.ai') || !fileUrl.includes('secure=true')) {
+    //   return res.status(400).json({ error: 'Link inválido ou ausente de parâmetros necessários.' });
+    // }
 
-    // Verificação da validade do link
-    const urlParams = new URLSearchParams(fileUrl.split('?')[1]);
-    const expiration = new Date(urlParams.get('se'));
-    if (new Date() > expiration) {
-      return res.status(400).json({ error: 'O link fornecido expirou.' });
+    let urlParams;
+    let expiration
+
+    if(fileUrl.includes('blipmediastore.blip.ai') || fileUrl.includes('secure=true')) {
+        urlParams = new URLSearchParams(fileUrl.split('?')[1]);
+        expiration = new Date(urlParams.get('se'));
+        if (new Date() > expiration) {
+          return res.status(400).json({ error: 'O link fornecido expirou.' });
+        }
     }
 
     // Baixar o arquivo usando Axios
@@ -72,12 +76,14 @@ router.post('/', async (req, res) => {
         ...phones.reduce((acc, phone, index) => {
           acc[`Telefone ${index + 1}`] = phone.number;
           acc[`Observação ${index + 1}`] = phone.note;
+          acc[`Link para envio ${index + 1}`] = `=HIPERLINK("https://api.whatsapp.com/send?phone=55${phone.number}";"Enviar Mensagem")`;
           return acc;
         }, {})
       };
 
       modifiedData.push(formattedRow);
     });
+
 
     // Criar um novo workbook com os dados modificados
     const newWorkbook = xlsx.utils.book_new();
