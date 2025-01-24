@@ -31,11 +31,6 @@ router.post('/', async (req, res) => {
 
     const fileUrl = file.uri;
 
-    // Validação do link do Blip Media Store
-    // if (!fileUrl.includes('prime.altubots') || !fileUrl.includes('blipmediastore.blip.ai') || !fileUrl.includes('secure=true')) {
-    //   return res.status(400).json({ error: 'Link inválido ou ausente de parâmetros necessários.' });
-    // }
-
     let urlParams;
     let expiration
 
